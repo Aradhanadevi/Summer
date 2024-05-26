@@ -33,7 +33,7 @@ const SideBar = () => {
         <div>
             {data.map((items, i) =>(
             <div className='my-2 flex items-center hover:bg-black p-2 rounded transition-all duration-300'> 
-             {items.icon} &emp {items.title}
+             {items.icon} &emsp; {items.title}
             </div>
             ))}
         </div>
