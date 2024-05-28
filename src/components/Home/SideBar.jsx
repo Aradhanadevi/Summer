@@ -3,24 +3,29 @@ import { CgNotes } from "react-icons/cg";
 import { MdImportantDevices } from "react-icons/md";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
     const data= [
         {
             title: "All Task",
-            icon: <CgNotes/>
+            icon: <CgNotes/>,
+            link: "/",
         },
         {
             title: "Completed Task",
-            icon: <FaCheck/>
+            icon: <FaCheck/>,
+            link: "/completedtask",
         },
         {
             title: "Pending Task",
-            icon: <MdOutlinePendingActions/>
+            icon: <MdOutlinePendingActions/>,
+            link: "/pendingtask",
         },
         {
             title: "Important Task",
-            icon: <MdImportantDevices/>
+            icon: <MdImportantDevices/>,
+            link: "/importanttask",
         }
     ];
   return (
@@ -32,9 +37,11 @@ const SideBar = () => {
         </div>
         <div>
             {data.map((items, i) =>(
-            <div className='my-2 flex items-center hover:bg-gray-600 p-2 rounded transition-all duration-300'> 
+            <Link  to={items.link} 
+            key={i}
+            className='my-2 flex items-center hover:bg-gray-600 p-2 rounded transition-all duration-300'> 
              {items.icon} &emsp; {items.title}
-            </div>
+            </Link>
             ))}
         </div>
         <div><button className='bg-gray-500 w-full p-2 rounded'>Log Out</button></div>
