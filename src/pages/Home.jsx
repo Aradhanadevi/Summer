@@ -2,6 +2,7 @@ import React from 'react';
 import SideBar from '../components/Home/SideBar';
 import { Outlet } from 'react-router-dom';
 
+
 const Home = () => {
   return (
     <div className="flex h-[98vh] gap-4">
