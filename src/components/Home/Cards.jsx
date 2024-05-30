@@ -4,7 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-const Cards = ({home}) => {
+const Cards = ({home, setInputDiv}) => {
     const data = [
         {
             title:"Dance",
@@ -46,10 +46,10 @@ const Cards = ({home}) => {
         </div>
     ))}
     {home === "true" &&  (
-    <div className="flex flex-col justify-center items-center bg-gray-700 rounded-sm p-4 text-gray-300 hover:scale-105 hover:cursor-pointer transition-all duration-300" >
+    <button  className="flex flex-col justify-center items-center bg-gray-700 rounded-sm p-4 text-gray-300 hover:scale-105 hover:cursor-pointer transition-all duration-300" onClick={()=>setInputDiv("fixed")} >
         <IoIosAddCircleOutline className="text-5xl"/>
         <h2 className="text-2xl mt-4 ">Add New Task</h2>
-    </div>
+    </button>
 )}    
     </div>
   );
