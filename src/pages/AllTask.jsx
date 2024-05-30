@@ -8,7 +8,7 @@ const AllTask = () => {
       <div className='w-full flex justify-end px-4 py-2'>
         <button><IoIosAddCircleOutline className="text-4xl text-gray-400 hover:text-gray-100 transition-all duration-300"/></button>
       </div>
-      <Cards home={"true"}/>
+      <Cards home={"true"} />
       
     </div>
   )
