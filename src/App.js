@@ -5,6 +5,7 @@ import AllTask from "./pages/AllTask";
 import ImportantTask from "./pages/ImportantTask";
 import CompletedTask from "./pages/CompletedTask";
 import PendingTask from "./pages/PendingTask";
+import Signup from './pages/Signup';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="/completedtask" element={<CompletedTask/>}/>
             <Route path="/pendingtask" element={<PendingTask/>}/>
           </Route>
+          <Route path="/signup" element={<Signup/>}/>
         </Routes>
       </Router> 
     </div>
