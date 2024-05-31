@@ -6,6 +6,7 @@ import ImportantTask from "./pages/ImportantTask";
 import CompletedTask from "./pages/CompletedTask";
 import PendingTask from "./pages/PendingTask";
 import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="/pendingtask" element={<PendingTask/>}/>
           </Route>
           <Route path="/signup" element={<Signup/>}/>
+          <Route path="/login" element={<Login/>}/>
         </Routes>
       </Router> 
     </div>
