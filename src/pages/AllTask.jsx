@@ -1,9 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Cards from '../components/Home/Cards';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import InputData from "../components/Home/inputData"
+import axios from "axios";
+
 const AllTask = () => {
   const [inputDiv, setInputDiv] = useState("hidden");
+  const [Data, setData] = useState();
+  const headers = {id:localStorage.getItem("id"), authorization: `Bearer ${localStorage.getItem("token")}`};
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios.get("http://localhost:1000/api/v2/get-all-task", {
+          headers,
+      });
+      setData(response.data.data);
+    };
+    fetch();
+  }, [])
+  Data && console.log(Data.task);
   return (
     <>
       <div>
@@ -12,7 +26,7 @@ const AllTask = () => {
           <IoIosAddCircleOutline className="text-4xl text-gray-400 hover:text-gray-100 transition-all duration-300"/>
         </button>
       </div>
-      <Cards home={"true"} setInputDiv={setInputDiv} />
+      { Data && <Cards home={"true"} setInputDiv={setInputDiv} data={Data.task} /> }
     </div>
     <InputData inputDiv={inputDiv} setInputDiv={setInputDiv}/>
     </>

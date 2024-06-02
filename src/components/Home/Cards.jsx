@@ -3,31 +3,54 @@ import { CiHeart } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { FaHeart } from "react-icons/fa";
+import axios from 'axios';
 
-const Cards = ({home, setInputDiv}) => {
-    const data = [
-        {
-            title:"Dance",
-            desc: "Can't do anything but dance .",
-            status:"Complete",
-        },
-        {
-            title:"Cry",
-            desc: "My favourite hobbie",
-            status:"Pending",
-        },
-        {
-            title:"Anixiety",
-            desc: "Just my true best friend cause it never leaves me alone.",
-            status:"Complete",
-        },
-        {
-            title:"Happy",
-            desc: "One day I will be happy with myself.",
-            status:"Pending",
-        },
-    ];
-  return (
+const Cards = ({home, setInputDiv, data}) => {
+    const headers = {
+        id: localStorage.getItem("id"),
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+    };
+    const handleComplteTask = async (id) =>{
+        try {
+                await axios.put(
+                `http://localhost:1000/api/v2/update-complete-task/${id}`, 
+                {},
+                {headers}
+            );
+            // alert(response.data.message);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const handleImportant = async (id) =>{
+        try {
+            const response = await axios.put(
+                `http://localhost:1000/api/v2/update-important-task/${id}`, 
+                {},
+                {headers}
+            );
+            alert(response.data.message);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const handleUpdate = async (id) =>{
+        setInputDiv("fixed");
+    }
+    const deleteTask = async (id)=>{
+        try {
+            const response = await axios.delete(
+                `http://localhost:1000/api/v2/delete-task/${id}`, 
+                {},
+                {headers}
+            );
+            alert(response.data.message);
+        } catch (error) {
+            console.log(error);
+        }
+    }  
+    return (
     <div className="grid grid-cols-3 gap-4 p-4">
         {data && data.map((items, i) => (
         <div className=" flex flex-col justify-between bg-gray-700 rounded-sm p-4">
@@ -36,11 +59,28 @@ const Cards = ({home, setInputDiv}) => {
                 <p className="text-gray-300 my-2">{items.desc}</p>
             </div>
             <div className="mt-4 w-full flex items-center">
-                <button className={`${items.status === "Pending" ? "bg-red-500" : "bg-green-500"} p-2 rounded`}>{items.status}</button>
+                <button className={`${items.complete === false ? "bg-red-500" : "bg-green-500"} 
+                p-2 rounded w-3/6`}
+                onClick={()=>handleComplteTask(items._id)}
+                >
+                    {items.complete === true ? "Completed" : "Pending"}
+                </button>
                 <div className="text-white p-2 w-3/6 text-xl font-semibold flex justify-around">
-                    <button><CiHeart/></button>
-                    <button><CiEdit/></button>
-                    <button><MdDelete/></button>
+                    <button onClick={()=>handleImportant(items._id)}>
+                        {items.important === false ? (
+                        <CiHeart/>
+                        ) : (
+                        <FaHeart className='text-red-500' />
+                        ) }
+                    </button>
+                    <button
+                        onClick={()=>handleUpdate(items._id)}
+                    >
+                        <CiEdit/>
+                    </button>
+                    <button onClick={() => deleteTask(items._id)}>
+                        <MdDelete/>
+                    </button>
                 </div>
             </div>
         </div>
