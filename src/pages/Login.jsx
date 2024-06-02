@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {authActions} from "../store/auth";
 const Login = () => {
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
+    const navigate = useNavigate();
+    if (isLoggedIn === true){
+        navigate("/");
+    }
   const [Data, setData] = useState({username:"", password:""});
   const history = useNavigate();
   const dispatch = useDispatch();

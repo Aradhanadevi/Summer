@@ -7,13 +7,17 @@ import CompletedTask from "./pages/CompletedTask";
 import PendingTask from "./pages/PendingTask";
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import { authActions } from "./store/auth";
 
 const App = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
   useEffect(() => {
-    if (isLoggedIn === false){
+  if (localStorage.getItem("id") && localStorage.getItem("token")){
+    dispatch(authActions.login());
+  }else if (isLoggedIn === false){
       navigate("/signup");
     }
   

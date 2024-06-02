@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {useSelector} from "react-redux";
 import axios from "axios";
 const Signup = () => {
+    const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
+    const navigate = useNavigate();
+    if (isLoggedIn === true){
+        navigate("/");
+    }
   const [Data, setData] = useState({username:"", email:"", password:""})
-  const history = useNavigate();
   const change = (e)=>{
     const {name, value} = e.target;
     setData({...Data, [name]: value});
@@ -17,7 +22,7 @@ const Signup = () => {
             const response = await axios.post("http://localhost:1000/api/v1/sign-in", Data);
             setData({username: "", email: "", password:""})
             alert(response.data.message);
-            history("/login")
+            navigate("/login")
         }
     } catch (error) {
         // console.log(error);
