@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 const Signup = () => {
   const [Data, setData] = useState({username:"", email:"", password:""})
+  const history = useNavigate();
   const change = (e)=>{
     const {name, value} = e.target;
-    setData({...Data, [name]: value})
-  }
+    setData({...Data, [name]: value});
+  };
   const submit = async () => {
-    if(Data.username === "" || Data.email === "" || Data.password ===""){
-        alert("All fields are reqired")
+    try {
+        if(Data.username ==="" || Data.email ==="" || Data.password ===""){
+            alert("All fields are reqired")
+        }
+        else{
+            const response = await axios.post("http://localhost:1000/api/v1/sign-in", Data);
+            setData({username: "", email: "", password:""})
+            alert(response.data.message);
+            history("/login")
+        }
+    } catch (error) {
+        // console.log(error);
+        alert(error.response.data.message);
     }
   }
   return (
@@ -28,7 +40,7 @@ const Signup = () => {
                 type="email"
                 placeholder='email'
                 className='bg-gray-700 px-3 py-2 my-3 w-full rounded'   
-                name='abc@example.com' 
+                name='email' 
                 required
                 value={Data.email}
                 onChange={change}

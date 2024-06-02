@@ -14,7 +14,7 @@ const App = () => {
   const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn);
   useEffect(() => {
     if (isLoggedIn === false){
-      navigate("/login");
+      navigate("/signup");
     }
   
   }, [])
