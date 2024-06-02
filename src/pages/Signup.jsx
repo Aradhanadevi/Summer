@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Signup = () => {
+  const [Data, setData] = useState({username:"", email:"", password:""})
+  const change = (e)=>{
+    const {name, value} = e.target;
+    setData({...Data, [name]: value})
+  }
+  const submit = async () => {
+    if(Data.username === "" || Data.email === "" || Data.password ===""){
+        alert("All fields are reqired")
+    }
+  }
   return (
     <div className='h-[90vh] flex items-center justify-center'>
         <div className='p-2 w-2/6 rounded bg-gray-800'>
@@ -11,6 +21,8 @@ const Signup = () => {
                 placeholder='username'
                 className='bg-gray-700 px-3 py-2 my-3 w-full rounded'   
                 name='username' 
+                value={Data.username}
+                onChange={change}
             />
             <input
                 type="email"
@@ -18,6 +30,8 @@ const Signup = () => {
                 className='bg-gray-700 px-3 py-2 my-3 w-full rounded'   
                 name='abc@example.com' 
                 required
+                value={Data.email}
+                onChange={change}
             />
             <input
                 type="password"
@@ -25,9 +39,11 @@ const Signup = () => {
                 className='bg-gray-700 px-3 py-2 my-3 w-full rounded'   
                 name='password' 
                 required
+                value={Data.password}
+                onChange={change}
             />
             <div className='w-full flex items-center justify-between'>
-            <button className='bg-yellow-500 text-xl font-semibold text-black px-3 py-2 rounded'>
+            <button className='bg-yellow-500 text-xl font-semibold text-black px-3 py-2 rounded' onClick={submit}>
                 Signup
             </button>
             <Link to="/login" className='text-gray-400 hover:text-gray-200 transition-all duration-300'>Already signup? Login</Link>
