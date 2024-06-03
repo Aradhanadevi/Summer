@@ -7,6 +7,7 @@ import axios from "axios";
 const AllTask = () => {
   const [inputDiv, setInputDiv] = useState("hidden");
   const [Data, setData] = useState();
+  const [UpdatedData, setUpdatedData] = useState({id:"", title:"", desc:""})
   const headers = {id:localStorage.getItem("id"), authorization: `Bearer ${localStorage.getItem("token")}`};
   useEffect(() => {
     const fetch = async () => {
@@ -15,8 +16,10 @@ const AllTask = () => {
       });
       setData(response.data.data);
     };
-    fetch();
-  }, [])
+    if (localStorage.getItem("id") && localStorage.getItem("token")){
+      fetch();
+    }
+  });
   Data && console.log(Data.task);
   return (
     <>
@@ -26,9 +29,9 @@ const AllTask = () => {
           <IoIosAddCircleOutline className="text-4xl text-gray-400 hover:text-gray-100 transition-all duration-300"/>
         </button>
       </div>
-      { Data && <Cards home={"true"} setInputDiv={setInputDiv} data={Data.task} /> }
+      { Data && <Cards home={"true"} setInputDiv={setInputDiv} data={Data.task} setUpdatedData={setUpdatedData} /> }
     </div>
-    <InputData inputDiv={inputDiv} setInputDiv={setInputDiv}/>
+    <InputData inputDiv={inputDiv} setInputDiv={setInputDiv} UpdatedData={UpdatedData} setUpdatedData={setUpdatedData}/>
     </>
   )
 }
