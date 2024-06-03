@@ -42,7 +42,6 @@ const Cards = ({home, setInputDiv, data, setUpdatedData}) => {
         try {
             const response = await axios.delete(
                 `http://localhost:1000/api/v2/delete-task/${id}`, 
-                {},
                 {headers}
             );
             alert(response.data.message);
