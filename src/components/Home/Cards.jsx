@@ -6,7 +6,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 import axios from 'axios';
 
-const Cards = ({home, setInputDiv, data}) => {
+const Cards = ({home, setInputDiv, data, setUpdatedData}) => {
     const headers = {
         id: localStorage.getItem("id"),
         authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -25,18 +25,18 @@ const Cards = ({home, setInputDiv, data}) => {
     }
     const handleImportant = async (id) =>{
         try {
-            const response = await axios.put(
+        await axios.put(
                 `http://localhost:1000/api/v2/update-important-task/${id}`, 
                 {},
                 {headers}
             );
-            alert(response.data.message);
         } catch (error) {
             console.log(error);
         }
     }
-    const handleUpdate = async (id) =>{
+    const handleUpdate = async (id, title, desc) =>{
         setInputDiv("fixed");
+        setUpdatedData({id:id, title:title, desc:desc})
     }
     const deleteTask = async (id)=>{
         try {
@@ -73,11 +73,11 @@ const Cards = ({home, setInputDiv, data}) => {
                         <FaHeart className='text-red-500' />
                         ) }
                     </button>
-                    <button
-                        onClick={()=>handleUpdate(items._id)}
+                    {home !== "false" && <button
+                        onClick={()=>handleUpdate(items._id, items.title, items.desc)}
                     >
                         <CiEdit/>
-                    </button>
+                    </button>}
                     <button onClick={() => deleteTask(items._id)}>
                         <MdDelete/>
                     </button>
