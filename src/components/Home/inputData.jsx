@@ -3,11 +3,12 @@ import { IoIosClose } from "react-icons/io";
 import axios from "axios";
 const InputData = ({inputDiv, setInputDiv, UpdatedData, setUpdatedData}) => {
     const headers = {id:localStorage.getItem("id"), authorization: `Bearer ${localStorage.getItem("token")}`};
-    const [Data, setData] = useState({title:"", desc:""});
+    const [Data, setData] = useState({title:"", desc:"", deadline:""});
     useEffect(() => {
       setData({
         title:UpdatedData.title,
-         desc:UpdatedData.desc
+         desc:UpdatedData.desc,
+         deadline:UpdatedData.deadline
       })
     }, [UpdatedData])
     
@@ -16,11 +17,11 @@ const InputData = ({inputDiv, setInputDiv, UpdatedData, setUpdatedData}) => {
     setData({...Data, [name]:value });
   }
   const submitData = async() =>{
-    if(Data.title === "" || Data.desc === ""){
+    if(Data.title === "" || Data.desc === "" || Data.deadline === ""){
       alert("All fields are required.");
     }else{
       await axios.post("http://localhost:1000/api/v2/create-task", Data, {headers});
-      setData({title:"", desc:""});
+      setData({title:"", desc:"", deadline:""});
       setInputDiv("hidden");
     }
   }
@@ -31,8 +32,8 @@ const InputData = ({inputDiv, setInputDiv, UpdatedData, setUpdatedData}) => {
       await axios.put(`http://localhost:1000/api/v2/update-task/${UpdatedData.id}`, Data, {
         headers,
       });
-      setUpdatedData({id:"", title:"", desc:""})
-      setData({title:"", desc:""});
+      setUpdatedData({id:"", title:"", desc:"", deadline:""})
+      setData({title:"", desc:"", deadline:""});
       setInputDiv("hidden");
     }
   }
@@ -45,7 +46,7 @@ const InputData = ({inputDiv, setInputDiv, UpdatedData, setUpdatedData}) => {
         <div className='flex justify-end'>
           <button className='text-3xl' onClick={()=>{
             setInputDiv("hidden");
-            setUpdatedData({id:"", title:"", desc:""})
+            setUpdatedData({id:"", title:"", desc:"", deadline:""})
           }}
           >
           <IoIosClose />
@@ -69,6 +70,13 @@ const InputData = ({inputDiv, setInputDiv, UpdatedData, setUpdatedData}) => {
               onChange={change}
             >
             </textarea>
+            <div className='px-3 rounded w-full '>Deadline</div>
+            <input type="date" 
+            name='deadline'
+            className='px-3 py-2 rounded w-full bg-gray-700 my-3'
+            value={Data.deadline}
+            onChange={change}
+            />
             {UpdatedData.id === "" ? 
             <button 
             className='px-3 py-2 bg-yellow-400 

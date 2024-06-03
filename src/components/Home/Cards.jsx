@@ -34,9 +34,9 @@ const Cards = ({home, setInputDiv, data, setUpdatedData}) => {
             console.log(error);
         }
     }
-    const handleUpdate = async (id, title, desc) =>{
+    const handleUpdate = async (id, title, desc, deadline) =>{
         setInputDiv("fixed");
-        setUpdatedData({id:id, title:title, desc:desc})
+        setUpdatedData({id:id, title:title, desc:desc, deadline:deadline})
     }
     const deleteTask = async (id)=>{
         try {
@@ -49,6 +49,11 @@ const Cards = ({home, setInputDiv, data, setUpdatedData}) => {
             console.log(error);
         }
     }  
+     // Function to format the date
+     const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB'); // dd/mm/yyyy format
+    }
     return (
     <div className="grid grid-cols-3 gap-4 p-4">
         {data && data.map((items, i) => (
@@ -56,6 +61,8 @@ const Cards = ({home, setInputDiv, data, setUpdatedData}) => {
             <div className="bg-gray-700 rounded-sm p-4">
                 <h3 className="text-xl font-semibold">{items.title}</h3>
                 <p className="text-gray-300 my-2">{items.desc}</p>
+                <div className='"text-gray-300 my-2 text-sm'>Deadline</div>
+                <p className='text-gray-300 '>{formatDate(items.deadline)}</p>
             </div>
             <div className="mt-4 w-full flex items-center">
                 <button className={`${items.complete === false ? "bg-red-500" : "bg-green-500"} 

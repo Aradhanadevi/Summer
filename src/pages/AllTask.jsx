@@ -7,7 +7,7 @@ import axios from "axios";
 const AllTask = () => {
   const [inputDiv, setInputDiv] = useState("hidden");
   const [Data, setData] = useState();
-  const [UpdatedData, setUpdatedData] = useState({id:"", title:"", desc:""})
+  const [UpdatedData, setUpdatedData] = useState({id:"", title:"", desc:"", deadline:""})
   const headers = {id:localStorage.getItem("id"), authorization: `Bearer ${localStorage.getItem("token")}`};
   useEffect(() => {
     const fetch = async () => {
